@@ -1,18 +1,21 @@
-import 'package:app_mensajeria/presentation/screens/sign_up_screen.dart';
+import 'package:app_mensajeria/presentation/screens/login_screen.dart';
 import 'package:app_mensajeria/presentation/widgets/button_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_password_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
 
-class MyLoginScreen extends StatelessWidget {
-  MyLoginScreen({super.key});
+class MySignUpScreen extends StatelessWidget {
+  MySignUpScreen({super.key});
 
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(
             horizontal: MediaQuery.of(context).size.width * 0.055),
@@ -23,7 +26,7 @@ class MyLoginScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  '¡Hola de Nuevo!',
+                  'Crea una cuenta',
                   style: TextStyle(
                       fontSize: 28,
                       fontWeight: FontWeight.w600,
@@ -38,7 +41,7 @@ class MyLoginScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    'Inicia sesión con tú cuenta',
+                    'Solo tomara unos minutos',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
@@ -51,7 +54,7 @@ class MyLoginScreen extends StatelessWidget {
               height: 15,
             ),
             MyTextFieldWidget(
-                text: 'Correo Electronico',
+                text: 'Correo Electrónico',
                 width: 420,
                 controllerTextField: _emailController),
             const SizedBox(
@@ -62,24 +65,35 @@ class MyLoginScreen extends StatelessWidget {
                 width: 420,
                 controllerTextField: _passwordController),
             const SizedBox(
-              height: 30,
+              height: 15,
             ),
-            const ButtonWidget(
+            MyPasswordTextFieldWidget(
+                text: 'Confirmar Contraseña',
+                width: 420,
+                controllerTextField: _confirmPasswordController),
+            const SizedBox(
+              height: 20,
+            ),
+            ButtonWidget(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MyLoginScreen()));
+                },
                 textButton: 'Entrar',
                 width: 420,
                 height: 40,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1C2541),
-                colorText: Color(0xFFFFFFFF)),
+                color: const Color(0xFF1C2541),
+                colorText: const Color(0xFFFFFFFF)),
             const SizedBox(
-              height: 30,
+              height: 20,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  '¿No tienes cuenta aún?',
+                  '¿Ya tienes cuenta?,',
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -93,10 +107,10 @@ class MyLoginScreen extends StatelessWidget {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MySignUpScreen()));
+                              builder: (context) => MyLoginScreen()));
                     },
                     child: const Text(
-                      'Regístrate aquí',
+                      'inicia sesión aquí.',
                       style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
