@@ -1,3 +1,4 @@
+import 'package:app_mensajeria/presentation/widgets/button_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_password_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,45 @@ class MyLoginScreen extends StatelessWidget {
             MyPasswordTextFieldWidget(
                 text: 'Contraseña',
                 width: 420,
-                controllerTextField: _passwordController)
+                controllerTextField: _passwordController),
+            const SizedBox(
+              height: 30,
+            ),
+            const ButtonWidget(
+                textButton: 'Entrar',
+                width: 420,
+                height: 40,
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Color(0xFF1C2541),
+                colorText: Color(0xFFFFFFFF)),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  '¿No tienes cuenta aún?',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xFF797979)),
+                ),
+                const SizedBox(
+                  width: 5,
+                ),
+                InkWell(
+                    onTap: () {},
+                    child: const Text(
+                      'Regístrate aquí',
+                      style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF1C2541)),
+                    ))
+              ],
+            )
           ],
         ),
       ),
