@@ -1,8 +1,11 @@
+import 'package:app_mensajeria/presentation/providers/user_provider.dart';
+import 'package:app_mensajeria/presentation/screens/list_chats_screen.dart';
 import 'package:app_mensajeria/presentation/screens/sign_up_screen.dart';
 import 'package:app_mensajeria/presentation/widgets/button_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_password_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MyLoginScreen extends StatelessWidget {
   MyLoginScreen({super.key});
@@ -12,6 +15,11 @@ class MyLoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void navigateChatListScreen() {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context) => const MyListChatsScreen()));
+    }
+
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -64,14 +72,19 @@ class MyLoginScreen extends StatelessWidget {
             const SizedBox(
               height: 30,
             ),
-            const ButtonWidget(
+            ButtonWidget(
+                onPressed: () async {
+                  await Provider.of<UserProvider>(context).loginUser(
+                      _emailController.text, _passwordController.text);
+                  navigateChatListScreen();
+                },
                 textButton: 'Entrar',
                 width: 420,
                 height: 40,
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF1C2541),
-                colorText: Color(0xFFFFFFFF)),
+                color: const Color(0xFF1C2541),
+                colorText: const Color(0xFFFFFFFF)),
             const SizedBox(
               height: 30,
             ),

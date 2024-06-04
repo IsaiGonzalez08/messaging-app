@@ -1,3 +1,5 @@
+import 'package:app_mensajeria/domain/models/User/repository/user_repository.dart';
+import 'package:app_mensajeria/infrastructure/repositories/User/user_repository_impl.dart';
 import 'package:app_mensajeria/presentation/screens/login_screen.dart';
 import 'package:app_mensajeria/presentation/widgets/button_widget.dart';
 import 'package:app_mensajeria/presentation/widgets/textfield_password_widget.dart';
@@ -7,13 +9,20 @@ import 'package:flutter/material.dart';
 class MySignUpScreen extends StatelessWidget {
   MySignUpScreen({super.key});
 
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+
+  final UserRepository _userRepository = UserRepositoryImpl();
 
   @override
   Widget build(BuildContext context) {
+    void navigateLoginScreen() {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => MyLoginScreen()));
+    }
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -53,7 +62,25 @@ class MySignUpScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            MyTextFieldWidget(
+            Row(
+              children: [
+                MyTextFieldWidget(
+                    text: 'Nombre',
+                    width: 200,
+                    controllerTextField: _nameController),
+                const SizedBox(
+                  width: 10,
+                ),
+                MyTextFieldWidget(
+                    text: 'Nombre',
+                    width: 200,
+                    controllerTextField: _lastnameController),
+              ],
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            MyPasswordTextFieldWidget(
                 text: 'Correo Electrónico',
                 width: 420,
                 controllerTextField: _emailController),
@@ -65,19 +92,16 @@ class MySignUpScreen extends StatelessWidget {
                 width: 420,
                 controllerTextField: _passwordController),
             const SizedBox(
-              height: 15,
-            ),
-            MyPasswordTextFieldWidget(
-                text: 'Confirmar Contraseña',
-                width: 420,
-                controllerTextField: _confirmPasswordController),
-            const SizedBox(
               height: 20,
             ),
             ButtonWidget(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MyLoginScreen()));
+                onPressed: () async {
+                  await _userRepository.createUser(
+                      _nameController.text,
+                      _lastnameController.text,
+                      _emailController.text,
+                      _passwordController.text);
+                  navigateLoginScreen();
                 },
                 textButton: 'Entrar',
                 width: 420,
