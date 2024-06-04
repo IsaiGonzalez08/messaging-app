@@ -1,4 +1,5 @@
 import 'package:app_mensajeria/domain/models/User/user.dart';
+import 'package:app_mensajeria/presentation/providers/chat_provider.dart';
 import 'package:app_mensajeria/presentation/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -59,6 +60,58 @@ class MyListChatsScreen extends StatelessWidget {
               endIndent: 0,
               color: Color(0xFF797979),
             ),
+            Consumer<ChatProvider>(builder: (_, controller, __) {
+              final chats = controller.chatData;
+              return ListView.builder(
+                itemBuilder: (_, index) {
+                  final chat = chats[index];
+                  return InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.only(
+                          right: MediaQuery.of(context).size.width * 0.07,
+                          left: MediaQuery.of(context).size.width * 0.07),
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                        color: const Color(0xFFF5F5F5),
+                        width: 2,
+                      )),
+                      height: 80,
+                      child: Row(
+                        children: [
+                          Row(
+                            children: [
+                              CircleAvatar(
+                                radius: 20,
+                                backgroundColor: const Color(0xFF01142B),
+                                child: Consumer<UserProvider>(
+                                  builder: (context, userData, child) {
+                                    String initials =
+                                        getInitials(chat.name, chat.lastname);
+                                    return Text(initials,
+                                        style: const TextStyle(
+                                            fontSize: 36,
+                                            color: Color(0xFFFFFFFF)));
+                                  },
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  Text('${chat.name} ${chat.lastname}'),
+                                  Text(chat.lastMessage)
+                                ],
+                              )
+                            ],
+                          ),
+                          Text(chat.timestamp.toString())
+                        ],
+                      ),
+                    ),
+                  );
+                },
+                itemCount: chats.length,
+              );
+            })
           ],
         ),
       ),
